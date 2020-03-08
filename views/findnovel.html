@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+    <link
+      rel="stylesheet"
+      href="/node_modules/bootstrap/dist/css/bootstrap.min.css"
+    />
+    <style>
+      .box {
+        width: 340px;
+        margin: 0 auto;
+        margin-top: 50px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <form id="findNovel">
+        <div class="form-group">
+          <label for="title">请输入要搜索的小说的名字</label>
+          <input
+            type="text"
+            class="form-control"
+            name="title"
+            id="title"
+            placeholder="请输入小说标题"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">搜索</button>
+      </form>
+    </div>
+
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+
+    <script>
+      $('#findNovel').on('submit', function(e) {
+        e.preventDefault()
+        let formate = $(this).serialize()
+        // console.log(formate)
+        $.ajax({
+          url: '/findNovel',
+          type: 'post',
+          data: formate,
+          dataType: 'json',
+          success: function(data) {
+            // console.log(data)
+            let err_code = data.err_code
+            if (err_code === 200) {
+              console.log(data)
+            } else {
+              console.log('server err')
+            }
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
